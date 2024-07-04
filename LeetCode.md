@@ -11,6 +11,8 @@
 ![image-20240625001727027](C:/Users/hp/AppData/Roaming/Typora/typora-user-images/image-20240625001727027.png)
 
 ```c++
+
+
 class Solution {
     public ListNode reverseList(ListNode head) {
         ListNode prev = null;

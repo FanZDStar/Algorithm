@@ -1,6 +1,8 @@
-### 栈
+## STL
 
 [TOC]
+
+### 栈(stack)
 
 C++的STL已经将栈的操作都封装成了函数，我们只需要引进`#include<stack>`头文件即可使用。
 
@@ -158,7 +160,7 @@ template <class InputIterator>
     void insert (iterator position, InputIterator first, InputIterator last);
 ```
 
-### C++队列
+### C++队列(queue)
 
 C++ 对模板（Template）支持得很好，STL 就是借助模板把常用的数据结构及其算法都实现了一遍，并且做到了数据结构和算法的分离。STL的代码从广义上讲分为三类：algorithm（算法）、container（容器）和iterator（迭代器），几乎所有的代码都采用了模板类和模版函数的方式，这相比于传统的由函数和类组成的库来说提供了更好的代码重用机会。在C++标准中，STL被组织为下面的13个头文件：<algorithm >、<deque >、<functional>、<iterator>、<vector>、<list>、<map>、<memory>、<numeric>、<queue>、<set>、<stack>和<utility>。
 
@@ -190,7 +192,7 @@ empty();
 
 size()	返回队列中与元素的个数
 
-### List用法
+### 列表List用法
 
 C++ 中的 `std::list` 是一个双向链表的实现。它是标准模板库 (STL) 中的容器类之一。`std::list` 提供了高效的插入和删除操作，但随机访问性能较差。下面是 `std::list` 的所有主要用法和函数，包括从初始化开始的各个方面。
 
