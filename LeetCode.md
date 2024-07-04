@@ -811,3 +811,32 @@ public:
 };
 ```
 
+### T24	两两交换链表的节点
+
+#### 题目
+
+给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
+
+#### Code
+
+```c++
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        ListNode*  dummy = new ListNode(-1);  //虚拟头节点
+        dummy->next = head;
+        for(auto p = dummy; p->next && p->next->next; )
+        {
+            auto a = p->next, b = a->next;
+            p->next = b;
+            a->next = b->next;
+            b->next = a;
+            p = a;
+        }
+        return dummy->next;
+    }
+};
+
+
+```
+
