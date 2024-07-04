@@ -34,7 +34,7 @@ C++的STL已经将栈的操作都封装成了函数，我们只需要引进`#inc
 
 ![top()函数详解](https://img-blog.csdnimg.cn/20200419233407595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNTc1NTA3,size_16,color_FFFFFF,t_70)
 
-###### 6.返回栈中元素的数目
+##### 6.返回栈中元素的数目
 
 使用size()函数返回栈中元素的数目
 
@@ -168,7 +168,7 @@ C++ 对模板（Template）支持得很好，STL 就是借助模板把常用的�
 
 我们可以使用`queue<int> q;`来创建一个queue对象
 
-### 入队
+#### 入队
 
 push
 
@@ -425,3 +425,425 @@ int main() {
 ```
 
 以上示例展示了 `std::list` 的所有主要用法和函数，包括初始化、容量相关函数、元素访问、修改器、运算、迭代器和算法的使用。希望这些示例能够帮助你更好地理解和使用 `std::list`。
+
+
+
+### HashMap
+
+C++ 中的哈希表通常使用 `std::unordered_map` 和 `std::unordered_set` 来实现，这些容器都是 C++11 标准引入的。以下是 `std::unordered_map` 和 `std::unordered_set` 的详细用法和相关操作：
+
+#### 1. 包含头文件
+
+```
+cpp复制代码#include <unordered_map>
+#include <unordered_set>
+```
+
+#### 2. 创建和初始化
+
+##### `std::unordered_map`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_map>
+
+int main() {
+    std::unordered_map<int, std::string> myMap;  // 创建一个空的 unordered_map
+    std::unordered_map<int, std::string> myMap2 = {{1, "one"}, {2, "two"}, {3, "three"}};  // 使用初始化列表创建 unordered_map
+
+    return 0;
+}
+```
+
+##### `std::unordered_set`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_set>
+
+int main() {
+    std::unordered_set<int> mySet;  // 创建一个空的 unordered_set
+    std::unordered_set<int> mySet2 = {1, 2, 3, 4, 5};  // 使用初始化列表创建 unordered_set
+
+    return 0;
+}
+```
+
+#### 3. 插入元素
+
+##### `std::unordered_map`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_map>
+
+int main() {
+    std::unordered_map<int, std::string> myMap;
+    myMap.insert({1, "one"});
+    myMap[2] = "two";  // 使用下标操作符插入或修改元素
+    myMap[3] = "three";
+
+    for (const auto& pair : myMap) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
+    }
+
+    return 0;
+}
+```
+
+##### `std::unordered_set`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_set>
+
+int main() {
+    std::unordered_set<int> mySet;
+    mySet.insert(10);
+    mySet.insert(20);
+    mySet.insert(30);
+
+    for (int x : mySet) {
+        std::cout << x << " ";
+    }
+
+    return 0;
+}
+```
+
+#### 4. 删除元素
+
+##### `std::unordered_map`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_map>
+
+int main() {
+    std::unordered_map<int, std::string> myMap = {{1, "one"}, {2, "two"}, {3, "three"}};
+
+    // 使用键删除元素
+    myMap.erase(2);
+
+    // 使用迭代器删除元素
+    auto it = myMap.find(3);
+    if (it != myMap.end()) {
+        myMap.erase(it);
+    }
+
+    for (const auto& pair : myMap) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
+    }
+
+    return 0;
+}
+```
+
+##### `std::unordered_set`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_set>
+
+int main() {
+    std::unordered_set<int> mySet = {10, 20, 30, 40, 50};
+
+    // 使用值删除
+    mySet.erase(20);
+
+    // 使用迭代器删除
+    auto it = mySet.find(30);
+    if (it != mySet.end()) {
+        mySet.erase(it);
+    }
+
+    for (int x : mySet) {
+        std::cout << x << " ";
+    }
+
+    return 0;
+}
+```
+
+#### 5. 查找元素
+
+##### `std::unordered_map`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_map>
+
+int main() {
+    std::unordered_map<int, std::string> myMap = {{1, "one"}, {2, "two"}, {3, "three"}};
+
+    auto it = myMap.find(2);
+    if (it != myMap.end()) {
+        std::cout << "Found: " << it->first << ": " << it->second << std::endl;
+    } else {
+        std::cout << "Not Found" << std::endl;
+    }
+
+    // 使用 count 方法检查元素是否存在
+    if (myMap.count(3)) {
+        std::cout << "3 exists in the map" << std::endl;
+    } else {
+        std::cout << "3 does not exist in the map" << std::endl;
+    }
+
+    return 0;
+}
+```
+
+##### `std::unordered_set`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_set>
+
+int main() {
+    std::unordered_set<int> mySet = {10, 20, 30, 40, 50};
+
+    auto it = mySet.find(30);
+    if (it != mySet.end()) {
+        std::cout << "Found: " << *it << std::endl;
+    } else {
+        std::cout << "Not Found" << std::endl;
+    }
+
+    // 使用 count 方法检查元素是否存在
+    if (mySet.count(20)) {
+        std::cout << "20 exists in the set" << std::endl;
+    } else {
+        std::cout << "20 does not exist in the set" << std::endl;
+    }
+
+    return 0;
+}
+```
+
+#### 6. 遍历元素
+
+##### `std::unordered_map`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_map>
+
+int main() {
+    std::unordered_map<int, std::string> myMap = {{1, "one"}, {2, "two"}, {3, "three"}};
+
+    // 使用范围for循环
+    for (const auto& pair : myMap) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
+    }
+
+    // 使用迭代器
+    for (auto it = myMap.begin(); it != myMap.end(); ++it) {
+        std::cout << it->first << ": " << it->second << std::endl;
+    }
+
+    return 0;
+}
+```
+
+##### `std::unordered_set`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_set>
+
+int main() {
+    std::unordered_set<int> mySet = {10, 20, 30, 40, 50};
+
+    // 使用范围for循环
+    for (int x : mySet) {
+        std::cout << x << " ";
+    }
+    std::cout << std::endl;
+
+    // 使用迭代器
+    for (auto it = mySet.begin(); it != mySet.end(); ++it) {
+        std::cout << *it << " ";
+    }
+
+    return 0;
+}
+```
+
+#### 7. 获取大小和检查是否为空
+
+##### `std::unordered_map`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_map>
+
+int main() {
+    std::unordered_map<int, std::string> myMap = {{1, "one"}, {2, "two"}, {3, "three"}};
+
+    std::cout << "Size: " << myMap.size() << std::endl;
+    std::cout << "Is empty: " << std::boolalpha << myMap.empty() << std::endl;
+
+    return 0;
+}
+```
+
+##### `std::unordered_set`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_set>
+
+int main() {
+    std::unordered_set<int> mySet = {10, 20, 30, 40, 50};
+
+    std::cout << "Size: " << mySet.size() << std::endl;
+    std::cout << "Is empty: " << std::boolalpha << mySet.empty() << std::endl;
+
+    return 0;
+}
+```
+
+#### 8. 清空集合
+
+##### `std::unordered_map`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_map>
+
+int main() {
+    std::unordered_map<int, std::string> myMap = {{1, "one"}, {2, "two"}, {3, "three"}};
+    myMap.clear();
+
+    std::cout << "Size after clear: " << myMap.size() << std::endl;
+
+    return 0;
+}
+```
+
+##### `std::unordered_set`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_set>
+
+int main() {
+    std::unordered_set<int> mySet = {10, 20, 30, 40, 50};
+    mySet.clear();
+
+    std::cout << "Size after clear: " << mySet.size() << std::endl;
+
+    return 0;
+}
+```
+
+#### 9. 自定义哈希函数和比较函数
+
+##### `std::unordered_map`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_map>
+
+// 自定义哈希函数
+struct MyHash {
+    std::size_t operator()(int key) const {
+        return std::hash<int>()(key);
+    }
+};
+
+// 自定义比较函数
+struct MyEqual {
+    bool operator()(int lhs, int rhs) const {
+        return lhs == rhs;
+    }
+};
+
+int main() {
+    std::unordered_map<int, std::string, MyHash, MyEqual> myMap = {{1, "one"}, {2, "two"}, {3, "three"}};
+
+    for (const auto& pair : myMap) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
+    }
+
+    return 0;
+}
+```
+
+##### `std::unordered_set`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_set>
+
+// 自定义哈希函数
+struct MyHash {
+    std::size_t operator()(int key) const {
+        return std::hash<int>()(key);
+    }
+};
+
+// 自定义比较函数
+struct MyEqual {
+    bool operator()(int lhs, int rhs) const {
+        return lhs == rhs;
+    }
+};
+
+int main() {
+    std::unordered_set<int, MyHash, MyEqual> mySet = {10, 20, 30, 40, 50};
+
+    for (int x : mySet) {
+        std::cout << x << " ";
+    }
+
+    return 0;
+}
+```
+
+#### 10. 合并两个集合
+
+##### `std::unordered_map`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_map>
+
+int main() {
+    std::unordered_map<int, std::string> map1 = {{1, "one"}, {2, "two"}};
+    std::unordered_map<int, std::string> map2 = {{3, "three"}, {4, "four"}};
+
+    map1.insert(map2.begin(), map2.end());
+
+    for (const auto& pair : map1) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
+    }
+
+    return 0;
+}
+```
+
+##### `std::unordered_set`
+
+```
+cpp复制代码#include <iostream>
+#include <unordered_set>
+
+int main() {
+    std::unordered_set<int> set1 = {1, 2, 3};
+    std::unordered_set<int> set2 = {3, 4, 5};
+
+    set1.insert(set2.begin(), set2.end());
+
+    for (int x : set1) {
+        std::cout << x << " ";
+    }
+
+    return 0;
+}
+```
+
+#### 总结
+
+`std::unordered_map` 和 `std::unordered_set` 是 C++ 中强大的哈希表实现，提供了高效的插入、删除和查找操作。通过熟练掌握这些方法，可以在 C++ 中有效地使用哈希表来解决各种问题。
