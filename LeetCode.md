@@ -840,3 +840,47 @@ public:
 
 ```
 
+### T19	删除链表的第N个节点
+
+#### 题解
+
+快慢指针法
+
+#### code
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode *dummyHead = new ListNode(0,head);
+        ListNode *fast = head;
+        ListNode *slow = dummyHead;
+        for(int i = 0;i<n;i++)
+        {
+            fast = fast -> next;
+        }
+        while(fast)
+        {
+            slow = slow -> next;
+            fast = fast -> next;
+        }
+        ListNode *d = slow -> next;
+        slow -> next = slow -> next -> next;
+        delete d;
+        ListNode *ans = dummyHead -> next;
+        delete dummyHead;
+        return ans;
+    }
+};
+```
+
