@@ -884,3 +884,62 @@ public:
 };
 ```
 
+### T61	旋转链表
+
+#### 题目
+
+给你一个链表的头节点 `head` ，旋转链表，将链表每个节点向右移动 `k` 个位置。
+
+```
+输入：head = [1,2,3,4,5], k = 2
+输出：[4,5,1,2,3]
+```
+
+#### 闭合为环
+
+记给定链表的长度为 n，注意到当向右移动的次数 k≥n 时，我们仅需要向右移动 kmodn 次即可。因为每 n 次移动都会让链表变为原状。这样我们可以知道，新链表的最后一个节点为原链表的第 (n−1)−(kmodn) 个节点（从 0 开始计数）。
+
+这样，我们可以先将给定的链表连接成环，然后将指定位置断开。
+
+具体代码中，我们首先计算出链表的长度 n，并找到该链表的末尾节点，将其与头节点相连。这样就得到了闭合为环的链表。然后我们找到新链表的最后一个节点（即原链表的第 (n−1)−(kmodn) 个节点），将当前闭合为环的链表断开，即可得到我们所需要的结果。
+
+特别地，当链表长度不大于 1，或者 k 为 n 的倍数时，新链表将与原链表相同，我们无需进行任何处理。
+
+```c++
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (!head || k == 0) {
+            return head;
+        }
+        
+        // 计算链表长度，并将尾节点指向头节点，形成循环链表
+        int length = 1;
+        ListNode *tail = head;
+        while (tail->next) {
+            tail = tail->next;
+            length++;
+        }
+        tail->next = head;
+        
+        // 计算实际需要旋转的次数
+        k = k % length;
+        
+        // 找到新头节点的前一个节点
+        ListNode *newTail = head;
+        for (int i = 0; i < length - k - 1; ++i) {
+            newTail = newTail->next;
+        }
+        
+        // 新的头节点
+        ListNode *newHead = newTail->next;
+        
+        // 断开环
+        newTail->next = nullptr;
+        
+        return newHead;
+    }
+};
+
+```
+
