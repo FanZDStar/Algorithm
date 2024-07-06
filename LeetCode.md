@@ -1008,3 +1008,99 @@ public:
 ### T144 二叉树前序遍历
 
 见pdf
+
+### T1021	删除最外层的括号
+
+#### 题目
+
+**示例 1：**
+
+```
+输入：s = "(()())(())"
+输出："()()()"
+解释：
+输入字符串为 "(()())(())"，原语化分解得到 "(()())" + "(())"，
+删除每个部分中的最外层括号后得到 "()()" + "()" = "()()()"。
+```
+
+#### 题解
+
+1. **字符串处理和堆栈使用**：
+	- `s` 是输入的字符串，表示一个由括号字符 `'('` 和 `')'` 组成的字符串。
+	- `res` 是用于存储处理后的结果的字符串。
+	- `stack<char> st` 是一个堆栈，用来辅助处理括号的嵌套关系。
+2. **遍历字符串 `s`**：
+	- `for(auto c:s)` 遍历字符串 `s` 中的每个字符 `c`。
+3. **处理右括号 `')'`**：
+	- `if(c == ')') { st.pop(); }`：当遇到右括号时，表示一个内部嵌套的部分结束，从堆栈 `st` 中弹出对应的左括号 `'('`。
+4. **处理非空堆栈情况**：
+	- `if(!st.empty()) { res.push_back(c); }`：只有在堆栈不为空的情况下，才将当前字符 `c` 添加到结果字符串 `res` 中。这确保了只添加原语内部的字符，即去除了原语外部的最外层括号。
+5. **处理左括号 `'('`**：
+	- `if(c == "(") { st.emplace(c); }`：当遇到左括号时，将其推入堆栈 `st` 中，以便记录当前内部嵌套的起始。
+
+### 可能的问题和改进：
+
+- **效率改进**：每次处理字符时都进行堆栈的操作和判断，可以考虑优化，例如不用堆栈而是计数器来统计嵌套深度，这样可能会更高效。
+
+#### code
+
+```c++
+class Solution {
+public:
+    string removeOuterParentheses(string s) {
+        string res;
+        stack<char> st;
+
+        for(auto c:s)
+        {
+            if(c == ')')
+            {
+                st.pop();
+            }
+            if(!st.empty())
+            {
+                res.push_back(c);
+            }
+            if(c == '(')
+            {
+                st.emplace(c);
+            }
+        }
+        return res;
+    }
+};
+
+
+
+
+改进后：
+class Solution {
+public:
+    string removeOuterParentheses(string s) {
+        string res;
+        int openCount = 0;
+
+        for(auto c : s) {
+            if (c == ')') 
+            {
+                if (openCount > 1) 
+                {
+                    res.push_back(c);
+                }
+                openCount--;
+            } 
+            else if (c == '(') 
+            {
+                if (openCount > 0) 
+                {
+                    res.push_back(c);
+                }
+                openCount++;
+            }
+        }
+        return res;
+    }
+};
+
+```
+
