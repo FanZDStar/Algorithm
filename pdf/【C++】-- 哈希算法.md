@@ -229,7 +229,19 @@ hash(key) = key % capacity
 string类型的仿函数，不能用上述仿函数的类模板，因为字符不能取模。string类型的仿函数用来做key的数值尽量要找不重复的，否则会导致发生冲突的概率比较高
 
 ```cpp
-	struct StringHashFunc	{		//采用BKDR哈希（乘以质数，如131）,会减少冲突		size_t operator()(const string& s)		{			size_t value = 0;            //取每个字符*131之后的和			for (auto e : s)			{     				value += e;				value *= 131;			}			return value;		}	};
+	struct StringHashFunc	
+    {		
+        //采用BKDR哈希（乘以质数，如131）,会减少冲突		
+        size_t operator()(const string& s)		
+        {			
+            size_t value = 0;            //取每个字符*131之后的和			
+         for (auto e : s)			
+         {     				value += e;				
+          value *= 131;			
+         }			
+         return value;		
+        }	
+    };
 ```
 
 任意类型（pair、结构体）都可以做key，key尽量选择不容易重复的成员，跟一个把这个类型对象转换成整形的仿函数。比如一个类型做map/set的key，那就要求该类型能支持比较大小。又比如一个类型做unordered\_map/unordered\_set的key，那就要求该类型能支持转换成整形+相等比较。

@@ -1038,7 +1038,7 @@ public:
 5. **处理左括号 `'('`**：
 	- `if(c == "(") { st.emplace(c); }`：当遇到左括号时，将其推入堆栈 `st` 中，以便记录当前内部嵌套的起始。
 
-### 可能的问题和改进：
+#### 可能的问题和改进：
 
 - **效率改进**：每次处理字符时都进行堆栈的操作和判断，可以考虑优化，例如不用堆栈而是计数器来统计嵌套深度，这样可能会更高效。
 
@@ -1102,5 +1102,74 @@ public:
     }
 };
 
+```
+
+### T14	最长开头字符串
+
+#### 题目
+
+编写一个函数来查找字符串数组中的最长公共前缀。
+
+如果不存在公共前缀，返回空字符串 `""`。
+
+**示例 1：**
+
+```
+输入：strs = ["flower","flow","flight"]
+输出："fl"
+```
+
+#### 题解
+
+1. **参数检查与初始化**：
+	- 首先检查 `strs` 是否为空，如果为空则直接返回空字符串 `""`。
+	- 获取字符串数组的长度 `len`，并初始化一个空字符串 `cstr`，用于存储当前可能的最长公共前缀。
+2. **外层循环 - 字符串遍历**：
+	- 使用 `for(auto ch : strs[0])` 循环遍历第一个字符串 `strs[0]` 中的每一个字符 `ch`。
+	- 将当前字符 `ch` 加入到 `cstr` 中，以形成一个逐步增长的潜在公共前缀。
+3. **内层循环 - 前缀匹配检查**：
+	- 对于每个字符 `ch` 添加到 `cstr` 后，再次遍历整个字符串数组 `strs`。
+	- 使用 `strs[i].find(cstr)` 来检查当前字符串 `strs[i]` 是否以 `cstr` 开头。
+	- 如果 `find` 返回 `0`，表示找到了 `cstr` 开头位置，继续下一个字符串的检查。
+	- 如果 `find` 返回 `std::string::npos`（未找到），则说明 `cstr` 不是当前字符串的前缀，此时需要回退 `cstr.pop_back()`，并返回当前的 `cstr`。
+4. **返回结果**：
+	- 最后，如果所有字符串都能匹配到当前 `cstr`，则 `cstr` 将是最长的公共前缀；如果找不到匹配的前缀，则会返回空字符串 `""`。
+
+#### code
+
+```c++
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) 
+    
+    {
+
+        if(!strs.size())
+            return "";
+        int len = strs.size();
+        string cstr;
+        for(auto ch : strs[0])
+        {
+            cstr += ch;
+            for(int i = 0; i<len;i++)
+            {
+                if(!strs[i].find(cstr))
+                {
+                    continue;
+                }
+                else
+                {
+                    if(!cstr.empty())
+                    {
+                        cstr.pop_back();
+                        return cstr;
+                    }
+                }
+                    
+            }
+        }
+        return cstr;       
+    }
+};
 ```
 
