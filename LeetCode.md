@@ -1173,3 +1173,169 @@ public:
 };
 ```
 
+### T15	三数之和
+
+很经典的题目，哈哈哈，官解实在是看的有点迷糊
+
+#### 题目
+
+给你一个整数数组 `nums` ，判断是否存在三元组 `[nums[i], nums[j], nums[k]]` 满足 `i != j`、`i != k` 且 `j != k` ，同时还满足 `nums[i] + nums[j] + nums[k] == 0` 。请
+
+你返回所有和为 `0` 且不重复的三元组。
+
+**注意：**答案中不可以包含重复的三元组。
+
+**示例 1：**
+
+```
+输入：nums = [-1,0,1,2,-1,-4]
+输出：[[-1,-1,2],[-1,0,1]]
+解释：
+nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0 。
+nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0 。
+nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0 。
+不同的三元组是 [-1,0,1] 和 [-1,-1,2] 。
+注意，输出的顺序和三元组的顺序并不重要。
+```
+
+#### 题解
+
+1. **排序数组**：
+
+	- 首先，对数组 `nums` 进行排序。排序的主要目的是为了方便使用双指针技术，以及避免重复的解。
+
+2. **双指针技术**：
+
+	- 使用双指针 `l` 和 `r` 分别指向当前元素后面的第一个元素和数组的末尾。初始时，左指针 `l` 在当前元素的后一位，右指针 `r` 在数组末尾。
+
+3. **遍历和判断**：
+
+	- 对数组进行遍历，以每一个元素作为当前元素 `nums[i]`。对于当前元素 `nums[i]`，设定 `l = i + 1`，`r = len - 1`。
+	- 在内部循环中，计算当前三个指针所指元素的和 `sum = nums[i] + nums[l] + nums[r]`。
+
+4. **调整指针**：
+
+	- 如果
+
+		```
+		sum == 0
+		```
+
+		，则找到了一个符合条件的三元组
+
+		```
+		(nums[i], nums[l], nums[r])
+		```
+
+		，将其加入结果集中，并进一步调整指针避免重复解：
+
+		- 移动 `l` 和 `r` 至下一个不同的元素，以避免重复。
+
+	- 如果 `sum > 0`，说明右侧的数值过大，需要减小 `r`。
+
+	- 如果 `sum < 0`，说明左侧的数值过小，需要增大 `l`。
+
+5. **去重处理**：
+
+	- 在外层循环中，如果当前元素 `nums[i]` 与前一个元素相同，则跳过，以避免计算重复的三元组。
+
+6. **结束条件**：
+
+	- 外层循环遍历完所有可能的 `nums[i]`，内部双指针遍历也完成了所有可能的组合。
+
+7. **返回结果**：
+
+	- 最终返回结果集，其中包含所有满足条件的三元组。
+
+### 复杂度分析：
+
+- **时间复杂度**：主要由排序算法决定，通常为 O(n log n)，加上双指针遍历为 O(n^2)。总体为 O(n^2)。
+- **空间复杂度**：除了存储结果的空间外，额外的空间复杂度是 O(1)，因为只使用了常数级的额外空间。
+
+这种方法通过排序和双指针技术，有效地减少了问题的复杂度，使得在合理的时间内找到所有解。
+
+#### code
+
+```c++
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> result;
+        int len = nums.size();
+
+        sort(nums.begin(), nums.end());
+
+        for (int i = 0; i < len - 2; ++i) {
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+
+            int l = i + 1;
+            int r = len - 1;
+
+            while (l < r) {
+                int sum = nums[i] + nums[l] + nums[r];
+                if (sum == 0) {
+                    result.push_back({nums[i], nums[l], nums[r]});
+                    // Skip duplicates
+                    while (l < r && nums[l] == nums[l + 1]) ++l;
+                    while (l < r && nums[r] == nums[r - 1]) --r;
+                    ++l;
+                    --r;
+                } else if (sum > 0) {
+                    --r;
+                } else { // sum < 0
+                    ++l;
+                }
+            }
+        }
+
+        return result;
+    }
+};
+
+```
+
+### T16	最接近的三数之和
+
+和上一题倒是很接近，我们可以参考
+
+#### 题目
+
+略
+
+#### code
+
+```c++
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        // 排序数组，便于双指针法
+        sort(nums.begin(), nums.end());
+        int len = nums.size();
+        int closestSum = nums[0] + nums[1] + nums[2]; // 初始最接近的和为前三个数的和
+
+        for (int i = 0; i < len - 2; ++i) {
+            int l = i + 1;
+            int r = len - 1;
+
+            while (l < r) {
+                int sum = nums[i] + nums[l] + nums[r];
+                // 更新最接近的和
+                if (abs(sum - target) < abs(closestSum - target)) {
+                    closestSum = sum;
+                }
+                // 根据当前和与目标的大小关系移动指针
+                if (sum < target) {
+                    ++l;
+                } else {
+                    --r;
+                }
+            }
+        }
+
+        return closestSum;
+    }
+};
+
+```
+
