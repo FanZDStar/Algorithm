@@ -1,1 +1,1 @@
-学好算法是一件很酷的事！
+Mastering algorithms is really cool!
