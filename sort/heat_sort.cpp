@@ -7,9 +7,9 @@ void swap(int &i, int &j)
 {
     if (i == j) // 如果两个数相等，交换没有意义，直接返回
         return;
-    i = i ^ j;  // i = i ^ j
-    j = j ^ i;  // j = j ^ (i ^ j) = i
-    i = i ^ j;  // i = (i ^ j) ^ i = j
+    i = i ^ j; // i = i ^ j
+    j = j ^ i; // j = j ^ (i ^ j) = i
+    i = i ^ j; // i = (i ^ j) ^ i = j
 }
 
 // 向上调整函数，用于插入新元素后维护堆的性质
@@ -23,7 +23,7 @@ void AdjustUp(int a[], int child)
         if (a[parent] < a[child])
         {
             swap(a[parent], a[child]); // 如果父节点小于子节点，则交换它们
-            child = parent; // 更新子节点索引为父节点索引
+            child = parent;            // 更新子节点索引为父节点索引
             parent = (parent - 1) / 2; // 更新父节点索引为新的父节点的父节点
         }
         else
@@ -51,7 +51,7 @@ void AdjustDown(int a[], int size, int parent)
         if (a[parent] < a[child])
         {
             swap(a[parent], a[child]);
-            parent = child; // 更新父节点索引为较大孩子的索引
+            parent = child;         // 更新父节点索引为较大孩子的索引
             child = parent * 2 + 1; // 更新较大孩子索引为新的父节点的左孩子索引
         }
         else
@@ -74,16 +74,16 @@ void HeapSort(int a[], int size)
     int end = size - 1;
     while (end > 0)
     {
-        swap(a[0], a[end]); // 将堆顶元素（最大值）与末尾元素交换
+        swap(a[0], a[end]);    // 将堆顶元素（最大值）与末尾元素交换
         AdjustDown(a, end, 0); // 调整剩余元素，重新生成最大堆
-        end--; // 缩小堆的范围
+        end--;                 // 缩小堆的范围
     }
 }
 
 // 主函数，测试堆排序算法
 int main()
 {
-    int a[] = { 9, 8, 6, 5, 4, 2, 2, 1 }; // 待排序数组
+    int a[] = {9, 8, 6, 5, 4, 2, 2, 1};  // 待排序数组
     int size = sizeof(a) / sizeof(a[0]); // 数组大小
 
     HeapSort(a, size); // 调用堆排序函数对数组进行排序
