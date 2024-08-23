@@ -847,3 +847,282 @@ int main() {
 #### 总结
 
 `std::unordered_map` 和 `std::unordered_set` 是 C++ 中强大的哈希表实现，提供了高效的插入、删除和查找操作。通过熟练掌握这些方法，可以在 C++ 中有效地使用哈希表来解决各种问题。
+
+### practice
+
+单链表
+
+```c++
+#include <stdio.h>
+#include <iostream>
+
+typedef struct LNode
+{
+    int data;
+    struct LNode *next;
+}LNode,*LinkList;
+
+// 初始化空链表(不带头结点)
+bool InitList(LinkList &L){
+    L = nullptr;
+    return true;
+}
+
+// 初始化空链表(带头结点)
+/* bool InitList(LinkList &L){
+    
+    L = new LNode;
+    if(L == nullptr) return false;
+    L -> next = nullptr;
+    return true;
+} */
+
+
+// 按位序插入(带头结点)
+bool ListInsert(LinkList &L, int i, int e){
+    if(i < 1)   return false;
+    LNode *p;
+    int j = 0;
+    p = L;
+    while(p != nullptr && j < i - 1){
+        p = p -> next;
+        j++ ;
+    }
+    if(p == nullptr)    return false;
+    LNode *s = new LNode;
+    s -> data = e;
+    s -> next = p -> next;
+    p -> next = s;
+    return true;
+}
+
+// 处理不带头结点的链表费事一点
+// 需要补充处理i == 1 的情况了
+
+
+// 指定节点的后插操作
+bool InsertNextNode (LNode *p, int e){
+    if(p == nullptr)    return false;
+    LNode *s = new LNode;
+    if(s == nullptr)    return false;
+    s -> data = e;
+    s -> next = p -> next;
+    p -> next = s;
+    return true;
+}
+
+// 指定节点的前插操作
+bool InsertPriorNode (LNode *p, int e){
+    if(p == nullptr)    return false;
+    LNode *s = new LNode;
+    if(s == nullptr)    return false;
+
+    s -> next = p -> next;
+    p -> next = s;
+    s -> data = p -> data;
+    p -> data = e;
+    return true;
+}
+
+// 删除
+bool ListDelete(LinkList &L, int i, int &e) {
+    if(i < 1) return false;
+    LNode *p = L;
+    int j = 0;
+
+    // 找到要删除的前一个节点
+    while(p != nullptr && j < i - 1) {
+        p = p->next;
+        j++;
+    }
+
+    if(p == nullptr || p->next == nullptr) return false; // i值不合法或无节点可删除
+
+    LNode *q = p->next;
+    e = q->data; // 赋值被删除节点的数据
+    p->next = q->next;
+    delete q;
+    return true;
+}
+
+
+
+// 按位查找
+LNode *GetElem(LinkList L, int i){
+    if(i < 0)   return nullptr;
+    LinkList p ;
+    int j = 0;
+    p = L;
+    while(p && j < i){
+        p = p -> next;
+        j ++;
+    }
+    return p;
+}
+
+
+
+void test(){
+    LinkList L; // 申明指向一个指向单链表的指针
+    // 初始化一个空表
+    InitList(L);
+}
+```
+
+双链表
+
+
+
+```c++
+#include <stdio.h>
+#include <iostream>
+
+typedef struct DNode
+{
+    int data;
+    struct DNode *prior,*next;
+}DNode,*DLinkList;
+
+
+bool InitDLinkList(DLinkList &L){
+    L = new DNode;
+    if(L == NULL)   return false;
+    L -> prior = nullptr;
+    L -> next = nullptr;
+    return true;
+}
+
+
+bool Empty(DLinkList &L){
+    return L -> next == nullptr ;
+}
+
+
+
+// 后插
+bool InsertNextNode(DNode *p, DNode *s){
+    if(!p || !s)    return false;
+    s -> next = p -> next;
+    if(p -> next)   p -> next -> prior = s; // 如果p后有后继结点
+    s -> prior = p;
+    p -> next = s;
+}
+
+
+// 删除p结点的后继结点
+bool DeleteNextDNode(DNode *p){
+    if(p == nullptr)    return false;
+    DNode *q = p -> next; // 找到p的后继结点q
+    if(q == nullptr)    return false; // p没有后继
+    p -> next = q -> next;
+    if(q -> next != nullptr)    p -> next -> prior = p; // q结点不是最后一个结点
+    delete p;
+    return true;
+    
+}
+
+
+// 销毁双链表
+void DestroyList(DLinkList &L){
+    while (L -> next)
+        DeleteNextDNode(L -> next);
+    delete L ; // 释放头结点
+    L = nullptr; // 头结点指向null
+    
+}
+
+
+// 遍历略
+
+void testDLinkList(){
+    DLinkList L;
+    InitDLinkList(L);
+}
+```
+
+栈
+
+```c++
+#include <stdio.h>
+#include <iostream>
+
+#define MaxSize 10
+
+
+typedef struct LNode
+{
+    int data[MaxSize];
+    int top; // 栈顶指针
+}SqStack;
+
+
+
+
+// 入栈
+bool Push(SqStack &S, int i){
+    if(S.top == MaxSize - 1)
+        return false;
+    S.top ++;
+    S.data[S.top] = i; // S.data[++S.top] = i;
+    return true;
+}
+
+
+
+
+// 出栈
+bool Pop(SqStack &S, int &i){
+    if(S.top == -1) // 栈空报错
+        return false;
+    i = S.data[S.top--];
+    return true;
+}
+
+
+
+// 栈顶元素
+bool GetTop(SqStack &S, int &i){
+    if(S.top == -1)
+        return false;
+    i = S.data[S.top];
+    return true;
+}
+
+
+
+void testStack(){
+    SqStack S;
+}
+
+
+int main(){
+    return 0;
+}
+```
+
+KMP算法
+
+```
+// KMP算法
+
+int Index_KMP(string S, string T, int next[]){
+    int i = 1, j = 1;
+
+    while(i <= S.length() && j <= T.length()){
+        if(i == j || S.ch[i] == T.ch[j]){
+            ++i;
+            ++j;
+        }
+        else{
+            j = next[j];
+        }
+    }
+    if(i > T.length()){
+        return i - T.length();
+    }
+    else{
+        return 0;
+    }
+}
+```
+
