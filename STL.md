@@ -1,44 +1,44 @@
-## STL
+# 
 
 [TOC]
 
-### 栈(stack)
+## 栈(stack)
 
 C++的STL已经将栈的操作都封装成了函数，我们只需要引进`#include<stack>`头文件即可使用。
 
 ### 栈的基本操作
 
-##### 1.初始化
+#### 1.初始化
 
 我们可以直接使用`stack<int> s;`来创建一个空的 stack 对象。
 
-##### 2.判断是否为空栈
+#### 2.判断是否为空栈
 
 使用empty()函数来判断栈是否为空。`bool empty()` 
 
-##### 3.入栈
+#### 3.入栈
 
 使用push()函数来完成入栈操作。
 
 ![push()函数详解](https://img-blog.csdnimg.cn/2020041923302690.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNTc1NTA3,size_16,color_FFFFFF,t_70)
 
-##### 4.出栈
+#### 4.出栈
 
 使用pop()函数实现出栈
 
 ![pop()函数详解](https://img-blog.csdnimg.cn/20200419233247129.png)
 
-##### 5.返回栈顶元素
+#### 5.返回栈顶元素
 
 使用top()函数返回栈顶元素
 
 ![top()函数详解](https://img-blog.csdnimg.cn/20200419233407595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNTc1NTA3,size_16,color_FFFFFF,t_70)
 
-##### 6.返回栈中元素的数目
+#### 6.返回栈中元素的数目
 
 使用size()函数返回栈中元素的数目
 
-### String类型
+## String类型
 
 ```C++
 #include<iostream>
@@ -100,7 +100,7 @@ int main(){
 
 int类型转为string类型：使用to_string函数
 
-### Vector用法详解
+## Vector用法详解
 
 ​	vector<T> 容器是包含 T 类型元素的序列容器，和 array<T，N> 容器相似，不同的是 vector<T> 容器的大小可以自动增长，从而可以包含任意数量的元素；因此类型参数 T 不再需要模板参数 N。只要元素个数超出 vector 当前容量，就会自动分配更多的空间。只能在容器尾部高效地删除或添加元素。
 ​        vector<T> 容器可以方便、灵活地代替数组。在大多数时候，都可以用 vector<T> 代替数组存放元素。只要能够意识到，vector<T> 在扩展容量，以 及在序列内部删除或添加元素时会产生一些开销；但大多数情况下，代码不会明显变慢。 为了使用 vector<T> 容器模板，需要在代码中包含头文件 #include<vector>。    
@@ -134,7 +134,8 @@ int类型转为string类型：使用to_string函数
 **reserve：改变vector的容量。**
 
 `void reserve (size_type n);`
-#### vector 增删查改
+
+### vector 增删查改
 
 `push_back`：尾插。
 
@@ -160,43 +161,43 @@ template <class InputIterator>
     void insert (iterator position, InputIterator first, InputIterator last);
 ```
 
-### C++队列(queue)
+## C++队列(queue)
 
 C++ 对模板（Template）支持得很好，STL 就是借助模板把常用的数据结构及其算法都实现了一遍，并且做到了数据结构和算法的分离。STL的代码从广义上讲分为三类：algorithm（算法）、container（容器）和iterator（迭代器），几乎所有的代码都采用了模板类和模版函数的方式，这相比于传统的由函数和类组成的库来说提供了更好的代码重用机会。在C++标准中，STL被组织为下面的13个头文件：<algorithm >、<deque >、<functional>、<iterator>、<vector>、<list>、<map>、<memory>、<numeric>、<queue>、<set>、<stack>和<utility>。
 
-#### 队列的初始化
+### 队列的初始化
 
 我们可以使用`queue<int> q;`来创建一个queue对象
 
-#### 入队
+### 入队
 
 push
 
-#### 返回第一个元素
+### 返回第一个元素
 
 front()	返回队列的第一个元素的引用
 
-#### 返回队列中的最后一个元素
+### 返回队列中的最后一个元素
 
 cout<<"入队后的队尾元素为:"<<q.back()<<endl;	返回指向队列的最后一个元素的引用
 
-#### 出队
+### 出队
 
 pop()删除队列的最后一个元素
 
-#### 判断队列是否为空
+### 判断队列是否为空
 
 empty();
 
-#### 求队列中元素的个数
+### 求队列中元素的个数
 
 size()	返回队列中与元素的个数
 
-### 列表List用法
+## 列表List用法
 
 C++ 中的 `std::list` 是一个双向链表的实现。它是标准模板库 (STL) 中的容器类之一。`std::list` 提供了高效的插入和删除操作，但随机访问性能较差。下面是 `std::list` 的所有主要用法和函数，包括从初始化开始的各个方面。
 
-#### 初始化
+### 初始化
 
 ```
 cpp复制代码#include <list>
@@ -228,7 +229,7 @@ int main() {
 }
 ```
 
-#### 容量相关函数
+### 容量相关函数
 
 ```
 void capacityFunctions(std::list<int>& lst) {
@@ -243,7 +244,7 @@ void capacityFunctions(std::list<int>& lst) {
 }
 ```
 
-#### 元素访问
+### 元素访问
 
 ```
 void elementAccess(std::list<int>& lst) {
@@ -258,7 +259,7 @@ void elementAccess(std::list<int>& lst) {
 }
 ```
 
-#### 修改器
+### 修改器
 
 ```
 void modifiers(std::list<int>& lst) {
@@ -292,7 +293,7 @@ void modifiers(std::list<int>& lst) {
 }
 ```
 
-#### 运算
+### 运算
 
 ```
 void operations(std::list<int>& lst1, std::list<int>& lst2) {
@@ -320,7 +321,7 @@ void operations(std::list<int>& lst1, std::list<int>& lst2) {
 }
 ```
 
-#### 迭代器
+### 迭代器
 
 ```
 void iteratorUsage(std::list<int>& lst) {
@@ -338,7 +339,7 @@ void iteratorUsage(std::list<int>& lst) {
 }
 ```
 
-#### 算法
+### 算法
 
 `std::list` 支持标准库中的一些通用算法，例如 `std::find`，但由于其双向链表的性质，并不支持所有算法。
 
@@ -355,7 +356,7 @@ void algorithms(std::list<int>& lst) {
 }
 ```
 
-#### 完整示例
+### 完整示例
 
 ```
 #include <list>
@@ -428,20 +429,20 @@ int main() {
 
 
 
-### HashMap
+## HashMap
 
 C++ 中的哈希表通常使用 `std::unordered_map` 和 `std::unordered_set` 来实现，这些容器都是 C++11 标准引入的。以下是 `std::unordered_map` 和 `std::unordered_set` 的详细用法和相关操作：
 
-#### 1. 包含头文件
+### 1. 包含头文件
 
 ```
 cpp复制代码#include <unordered_map>
 #include <unordered_set>
 ```
 
-#### 2. 创建和初始化
+### 2. 创建和初始化
 
-##### `std::unordered_map`
+#### `std::unordered_map`
 
 ```
 cpp复制代码#include <iostream>
@@ -455,7 +456,7 @@ int main() {
 }
 ```
 
-##### `std::unordered_set`
+#### `std::unordered_set`
 
 ```
 cpp复制代码#include <iostream>
@@ -469,9 +470,9 @@ int main() {
 }
 ```
 
-#### 3. 插入元素
+### 3. 插入元素
 
-##### `std::unordered_map`
+#### `std::unordered_map`
 
 ```
 cpp复制代码#include <iostream>
@@ -491,7 +492,7 @@ int main() {
 }
 ```
 
-##### `std::unordered_set`
+#### `std::unordered_set`
 
 ```
 cpp复制代码#include <iostream>
@@ -511,9 +512,9 @@ int main() {
 }
 ```
 
-#### 4. 删除元素
+### 4. 删除元素
 
-##### `std::unordered_map`
+#### `std::unordered_map`
 
 ```
 cpp复制代码#include <iostream>
@@ -539,7 +540,7 @@ int main() {
 }
 ```
 
-##### `std::unordered_set`
+#### `std::unordered_set`
 
 ```
 cpp复制代码#include <iostream>
@@ -565,9 +566,9 @@ int main() {
 }
 ```
 
-#### 5. 查找元素
+### 5. 查找元素
 
-##### `std::unordered_map`
+#### `std::unordered_map`
 
 ```
 cpp复制代码#include <iostream>
@@ -594,7 +595,7 @@ int main() {
 }
 ```
 
-##### `std::unordered_set`
+#### `std::unordered_set`
 
 ```
 cpp复制代码#include <iostream>
@@ -621,9 +622,9 @@ int main() {
 }
 ```
 
-#### 6. 遍历元素
+### 6. 遍历元素
 
-##### `std::unordered_map`
+#### `std::unordered_map`
 
 ```
 cpp复制代码#include <iostream>
@@ -646,7 +647,7 @@ int main() {
 }
 ```
 
-##### `std::unordered_set`
+#### `std::unordered_set`
 
 ```
 cpp复制代码#include <iostream>
@@ -670,9 +671,9 @@ int main() {
 }
 ```
 
-#### 7. 获取大小和检查是否为空
+### 7. 获取大小和检查是否为空
 
-##### `std::unordered_map`
+#### `std::unordered_map`
 
 ```
 cpp复制代码#include <iostream>
@@ -688,7 +689,7 @@ int main() {
 }
 ```
 
-##### `std::unordered_set`
+#### `std::unordered_set`
 
 ```
 cpp复制代码#include <iostream>
@@ -704,9 +705,9 @@ int main() {
 }
 ```
 
-#### 8. 清空集合
+### 8. 清空集合
 
-##### `std::unordered_map`
+#### `std::unordered_map`
 
 ```
 cpp复制代码#include <iostream>
@@ -722,7 +723,7 @@ int main() {
 }
 ```
 
-##### `std::unordered_set`
+#### `std::unordered_set`
 
 ```
 cpp复制代码#include <iostream>
@@ -738,9 +739,9 @@ int main() {
 }
 ```
 
-#### 9. 自定义哈希函数和比较函数
+### 9. 自定义哈希函数和比较函数
 
-##### `std::unordered_map`
+#### `std::unordered_map`
 
 ```
 cpp复制代码#include <iostream>
@@ -771,7 +772,7 @@ int main() {
 }
 ```
 
-##### `std::unordered_set`
+#### `std::unordered_set`
 
 ```
 cpp复制代码#include <iostream>
@@ -802,9 +803,9 @@ int main() {
 }
 ```
 
-#### 10. 合并两个集合
+### 10. 合并两个集合
 
-##### `std::unordered_map`
+#### `std::unordered_map`
 
 ```
 cpp复制代码#include <iostream>
@@ -824,7 +825,7 @@ int main() {
 }
 ```
 
-##### `std::unordered_set`
+#### `std::unordered_set`
 
 ```
 cpp复制代码#include <iostream>
@@ -844,11 +845,11 @@ int main() {
 }
 ```
 
-#### 总结
+### 总结
 
 `std::unordered_map` 和 `std::unordered_set` 是 C++ 中强大的哈希表实现，提供了高效的插入、删除和查找操作。通过熟练掌握这些方法，可以在 C++ 中有效地使用哈希表来解决各种问题。
 
-### practice
+## practice
 
 单链表
 
