@@ -2,9 +2,9 @@
 
 
 
-## 一.快慢指针法
+# 一.快慢指针法
 
-#### 快慢指针寻找链表中间节点
+## 快慢指针寻找链表中间节点
 
 初始时，快指针fast和慢指针slow均指向链表的左端点。我们将快指针fast向右移动两次的同时，将慢指针slow向右移动一次，直到快指针到达边界（即快指针到达右端点或快指针的下一个节点是右端点）。此时，慢指针slow对应的元素就是中位数。
 
@@ -39,7 +39,7 @@ public:
 };
 ```
 
-#### 判断链表中是否有环
+## 判断链表中是否有环
 
 设想一个情景：两个人在赛跑，A速度快，B速度慢，若是存在环(勺状图)，A和B总是会相遇的，相遇时A所经过的路径的长度要比B多若干个环的长度。
 
@@ -69,7 +69,7 @@ public:
 };
 ```
 
-#### 判断链表中是否有环并找到环的起点
+## 判断链表中是否有环并找到环的起点
 
 如果链表中有环，那么说明快慢指针会在环中的某位置相遇。此时，应让二者分别从head和相遇节点同时开始每次走一步。当它们再次相遇时，二者所在的结点便是环的入口结点。
 
@@ -107,9 +107,9 @@ public:
 };
 ```
 
-#### 重排链表
+## 重排链表
 
-##### 解题思路
+解题思路
 
 1. 快慢指针找到中间结点
 
@@ -185,7 +185,7 @@ public:
 
 	
 
-#### 删除链表中的倒数第N个结点
+## 删除链表中的倒数第N个结点
 
 解题思路
 总体目标
@@ -238,4 +238,244 @@ public:
     }
 };
 ```
+
+# 二.最长有效括号
+
+**栈**
+
+撇开方法一提及的动态规划方法，相信大多数人对于这题的第一直觉是找到每个可能的子串后判断它的有效性，但这样的时间复杂度会达到 O(n^3)，无法通过所有测试用例。但是通过栈，我们可以在遍历给定字符串的过程中去判断到目前为止扫描的子串的有效性，同时能得到最长有效括号的长度。
+
+具体做法是我们始终保持栈底元素为当前已经遍历过的元素中「最后一个没有被匹配的右括号的下标」，这样的做法主要是考虑了边界条件的处理，栈里其他元素维护左括号的下标：
+
+对于遇到的每个 ‘(’ ，我们将它的下标放入栈中
+对于遇到的每个 ‘)’ ，我们先弹出栈顶元素表示匹配了当前右括号：
+如果栈为空，说明当前的右括号为没有被匹配的右括号，我们将其下标放入栈中来更新我们之前提到的「最后一个没有被匹配的右括号的下标」
+如果栈不为空，当前右括号的下标减去栈顶元素即为「以该右括号为结尾的最长有效括号的长度」
+我们从前往后遍历字符串并更新答案即可。
+
+需要注意的是，如果一开始栈为空，第一个字符为左括号的时候我们会将其放入栈中，这样就不满足提及的「最后一个没有被匹配的右括号的下标」，为了保持统一，我们在一开始的时候往栈中放入一个值为 −1 的元素。
+
+## code
+
+```c++
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int maxans = 0;
+        stack<int> stk;
+        stk.push(-1);
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == '(') {
+                stk.push(i);
+            } else {
+                stk.pop();
+                if (stk.empty()) {
+                    stk.push(i);
+                } else {
+                    maxans = max(maxans, i - stk.top());
+                }
+            }
+        }
+        return maxans;
+    }
+};
+
+```
+
+# 三.二进制计算
+
+  这道题的关键就是让你用代码模拟加法的运算过程。**加法的模拟可以理解为是一个通用模式，需要你用一个 `carry` 变量记录并正确进位**
+
+## code
+
+``````c++
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        // 先把输入的这两个二进制串反转，低位放在前面，方便处理进位
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
+        
+        // 存储结果
+        string result;
+        
+        int m = a.size(), n = b.size();
+        // carry 记录进位
+        int carry = 0;
+        int i = 0;
+        
+        // 开始类似 [2. 两数相加](#2) 的加法模拟逻辑
+        // 只是这里运算的是二进制字符串
+        while (i < max(m, n) || carry > 0) {
+            int val = carry;
+            val += i < m ? (a[i] - '0') : 0;
+            val += i < n ? (b[i] - '0') : 0;
+            result += (val % 2) + '0';
+            carry = val / 2;
+            i++;
+        }
+        
+        // 反转结果字符串
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
+``````
+
+# 四.移动匹配
+
+当一个字符串s：abcabc，内部又重复的子串组成，那么这个字符串的结构一定是这样的：
+
+![屏幕截图 2024-08-25 171408](imgs/屏幕截图 2024-08-25 171408.jpg)
+
+也就是又前后又相同的子串组成。
+
+那么既然前面有相同的子串，后面有相同的子串，用 s + s，这样组成的字符串中，后面的子串做前串，前后的子串做后串，就一定还能组成一个s，如图：
+
+![屏幕截图 2024-08-25 171439](imgs/屏幕截图 2024-08-25 171439.jpg)
+
+所以判断字符串s是否有重复子串组成，只要两个s拼接在一起，里面还出现一个s的话，就说明是又重复子串组成。
+
+当然，我们在判断 s + s 拼接的字符串里是否出现一个s的的时候，要刨除 s + s 的首字符和尾字符，这样避免在s+s中搜索出原来的s，我们要搜索的是中间拼接出来的s。
+
+## code
+
+``````c++
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        string t = s + s;
+        t.erase(t.begin()); 
+        t.erase(t.end() - 1); // 掐头去尾
+        if (t.find(s) != std::string::npos) 
+            return true; // r
+        return false;
+    }
+};
+``````
+
+# 五.c++分割字符串
+
+## code
+
+``````c++
+vector<string> splitIntoWords(const string &sentence) {
+        vector<string> words;
+        stringstream ss(sentence);
+        string word;
+        while (ss >> word) {
+            words.push_back(word);
+        }
+        return words;
+    }
+``````
+
+# 六.寻找最长回文子串
+
+**寻找回文串的问题核心思想是：从中间开始向两边扩散来判断回文串**，对于最长回文子串，就是这个意思：
+
+```python
+for 0 <= i < len(s):
+    找到以 s[i] 为中心的回文串
+    更新答案
+```
+
+找回文串的关键技巧是传入两个指针 `l` 和 `r` 向两边扩散，因为这样实现可以同时处理回文串长度为奇数和偶数的情况。
+
+```python
+for 0 <= i < len(s):
+    # 找到以 s[i] 为中心的回文串
+    palindrome(s, i, i)
+    # 找到以 s[i] 和 s[i+1] 为中心的回文串
+    palindrome(s, i, i + 1)
+    更新答案
+```
+
+## code
+
+``````c++
+#include <string>
+using namespace std;
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        string res = "";
+        for (int i = 0; i < s.length(); i++) {
+            // 以 s[i] 为中心的最长回文子串
+            string s1 = palindrome(s, i, i);
+            // 以 s[i] 和 s[i+1] 为中心的最长回文子串
+            string s2 = palindrome(s, i, i + 1);
+            // res = longest(res, s1, s2)
+            res = res.length() > s1.length() ? res : s1;
+            res = res.length() > s2.length() ? res : s2;
+        }
+        return res;
+    }
+
+private:
+    string palindrome(string s, int l, int r) {
+        // 防止索引越界
+        while (l >= 0 && r < s.length() && s[l] == s[r]) {
+            // 向两边展开
+            l--;
+            r++;
+        }
+        // 返回以 s[l] 和 s[r] 为中心的最长回文串
+        return s.substr(l + 1, r - l - 1);
+    }
+};
+``````
+
+# 七.字母异位词分组
+
+异位词这类问题的关键在于，你如何迅速判断两个字符串是异位词，主要考察数据编码和哈希表的使用：
+
+你是否可以找到一种编码方法，使得字母异位词的编码都相同？找到这种编码方式之后，就可以用一个哈希表存储编码相同的所有异位词，得到最终的答案。
+
+[242. 有效的字母异位词](vscode-webview://0kodhb6i2b8fhjfdmokifcrgdvlcji9h1lc7g75uqld2lvrjr0cg/problems/valid-anagram) 考察了异位词的编码问题，对字符串排序可以是一种编码方案，如果是异位词，排序后就变成一样的了，但是这样时间复杂度略高，且会修改原始数据。更好的编码方案是利用每个字符的出现次数进行编码，也就是下面的解法代码。
+
+**标签：哈希表，[数组](https://labuladong.online/algo/)**
+
+## code
+
+``````c++
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <list>
+
+class Solution {
+public:
+    std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& strs) {
+        // 编码到分组的映射
+        std::unordered_map<std::string, std::list<std::string>> codeToGroup;
+        for (const std::string& s : strs) {
+            // 对字符串进行编码
+            std::string code = encode(s);
+            // 把编码相同的字符串放在一起
+            codeToGroup[code].push_back(s);
+        }
+
+        // 获取结果
+        std::vector<std::vector<std::string>> res;
+        for (auto& group : codeToGroup) {
+            res.push_back(std::vector<std::string>(group.second.begin(), group.second.end()));
+        }
+
+        return res;
+    }
+
+private:
+    // 利用每个字符的出现次数进行编码
+    std::string encode(const std::string& s) {
+        std::string count(26, '0');
+        for (char c : s) {
+            int delta = c - 'a';
+            count[delta]++;
+        }
+        return count;
+    }
+};
+``````
 
